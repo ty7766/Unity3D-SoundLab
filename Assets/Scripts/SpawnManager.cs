@@ -9,14 +9,22 @@ public class SpawnManager : MonoBehaviour
     private float startDelay = 2;
     private float repeatRate = 2;
 
+    private PlayerController playerControllerScript;
+
     void Start()
     {
         //장애물 초기 위치에 생성
         InvokeRepeating("SpawnObstacle", startDelay, repeatRate);
+
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     void SpawnObstacle()
     {
-        Instantiate(obstaclePrefab, spawnPos, obstaclePrefab.transform.rotation);
+        //Player가 gameOver시 장애물 생성 정지
+        if (playerControllerScript.gameOver == false)
+        {
+            Instantiate(obstaclePrefab, spawnPos, obstaclePrefab.transform.rotation);
+        }
     }
 }
