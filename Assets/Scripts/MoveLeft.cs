@@ -3,6 +3,8 @@ using UnityEngine;
 public class MoveLeft : MonoBehaviour
 {
     private float speed = 30;       //장애물 이동 속도
+    private float leftBound = -15;  //지나간 장애물 삭제용
+
     private PlayerController playerControllerScript;
 
     void Start()
@@ -18,5 +20,9 @@ public class MoveLeft : MonoBehaviour
         {
             transform.Translate(Vector3.left * Time.deltaTime * speed);
         }
+
+        //화면에서 벗어난 장애물 삭제
+        if (transform.position.x > leftBound && gameObject.CompareTag("Obstacle"))
+            Destroy(gameObject);
     }
 }
