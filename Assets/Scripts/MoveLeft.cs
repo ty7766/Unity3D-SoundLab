@@ -3,15 +3,20 @@ using UnityEngine;
 public class MoveLeft : MonoBehaviour
 {
     private float speed = 30;       //장애물 이동 속도
+    private PlayerController playerControllerScript;
 
     void Start()
     {
-        
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
 
     void Update()
     {
-        transform.Translate(Vector3.left * Time.deltaTime * speed);
+        //플레이어가 게임 오버되면 장애물 정지
+        if (playerControllerScript.gameOver == false)
+        {
+            transform.Translate(Vector3.left * Time.deltaTime * speed);
+        }
     }
 }
