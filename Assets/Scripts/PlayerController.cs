@@ -1,3 +1,4 @@
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -5,6 +6,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;             //점프 조절
     public float gravityModifier;       //중력 조절
     public bool isOnGround = true;      //2단 점프 방지용
+    public bool gameOver = false;       //게임 오버 판정
+
     private Rigidbody playerRb;
 
 
@@ -28,6 +31,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        isOnGround = true;      //2단점프 방지
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = true;
+        }
+        else if(collision.gameObject.CompareTag("Obstacle"))
+        {
+            gameOver = true;
+            Debug.Log("Game Over!");
+        }
     }
 }
