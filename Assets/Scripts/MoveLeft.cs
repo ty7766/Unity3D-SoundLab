@@ -22,7 +22,7 @@ public class MoveLeft : MonoBehaviour
         }
 
         //화면에서 벗어난 장애물 삭제
-        if (transform.position.x > leftBound && gameObject.CompareTag("Obstacle"))
+        if (transform.position.x < leftBound && gameObject.CompareTag("Obstacle"))
             Destroy(gameObject);
     }
 }
