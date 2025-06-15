@@ -7,17 +7,23 @@ public class PlayerController : MonoBehaviour
     public float gravityModifier;       //중력 조절
     public bool isOnGround = true;      //2단 점프 방지용
     public bool gameOver = false;       //게임 오버 판정
+
     public ParticleSystem explosionParticle;       //폭발 이펙트
     public ParticleSystem dirtParticle;            //먼지 이펙트
 
+    public AudioClip jumpSound;                    //점프 사운드
+    public AudioClip crashSound;                   //충돌 사운드
+
     private Rigidbody playerRb;
     private Animator playerAnim;
+    private AudioSource playerAudio;
 
     //------------- 초기화 ---------------
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
+        playerAudio = GetComponent<AudioSource>();
         Physics.gravity *= gravityModifier;     //중력 값 새로 설정
     }
 
@@ -29,6 +35,7 @@ public class PlayerController : MonoBehaviour
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isOnGround = false;
             playerAnim.SetTrigger("Jump_trig");
+            playerAudio.PlayOneShot(jumpSound, 1.0f);
             dirtParticle.Stop();
         }
     }
@@ -50,6 +57,7 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetBool("Death_b", true);
             playerAnim.SetInteger("DeathType_int", 1);
             explosionParticle.Play();
+            playerAudio.PlayOneShot(crashSound, 1.0f);
             dirtParticle.Stop();
         }
     }
