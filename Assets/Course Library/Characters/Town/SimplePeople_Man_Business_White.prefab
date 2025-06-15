@@ -133,6 +133,11 @@ MonoBehaviour:
   jumpForce: 0
   gravityModifier: 0
   isOnGround: 1
+  gameOver: 0
+  explosionParticle: {fileID: 0}
+  dirtParticle: {fileID: 0}
+  jumpSound: {fileID: 0}
+  crashSound: {fileID: 0}
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0
