@@ -9,22 +9,25 @@ public class PlayerController : MonoBehaviour
     public bool gameOver = false;       //게임 오버 판정
 
     private Rigidbody playerRb;
+    private Animator playerAnim;
 
 
     //------------- 초기화 ---------------
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        playerAnim = GetComponent<Animator>();
         Physics.gravity *= gravityModifier;     //중력 값 새로 설정
     }
 
     void Update()
     {
-        //점프
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        //점프 (물리, 트리거, 애니메이션)
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isOnGround = false;
+            playerAnim.SetTrigger("Jump_trig");
         }
     }
 
@@ -39,6 +42,8 @@ public class PlayerController : MonoBehaviour
         {
             gameOver = true;
             Debug.Log("Game Over!");
+            playerAnim.SetBool("Death_b", true);
+            playerAnim.SetInteger("DeathType_int", 1);
         }
     }
 }
